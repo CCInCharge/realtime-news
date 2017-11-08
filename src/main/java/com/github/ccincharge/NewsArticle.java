@@ -22,17 +22,21 @@ class NewsArticle {
         this.publicationTime = publicationTime;
     }
 
+    /**
+     * toString takes this news article and returns a string that is a JSON
+     * representation of this article. If there was no publicationTime
+     * reported from the API, returns empty string for the publicationTime.
+     * @return JSON string representation of this object
+     */
     public String toString() {
         String publicationTimeFormat;
-        // Need to convert data attribute to string
         if (publicationTime == null) {
             publicationTimeFormat = "";
         }
         else {
-            DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+            DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS z");
             publicationTimeFormat = df.format(this.publicationTime);
         }
-
 
         // Maintains keys in order
         LinkedHashMap<String, String> output = new LinkedHashMap<>();

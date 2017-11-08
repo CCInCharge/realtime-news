@@ -8,9 +8,17 @@ import java.util.Properties;
 import org.apache.kafka.clients.producer.*;
 import org.apache.kafka.common.serialization.StringSerializer;
 
+/** Kafka producer that sends data consumed from the NewsApi API.
+ * @author Charles Chen
+ */
 class NewsApiProducer {
-    private final String BOOTSTRAP_SERVERS = "localhost:9092";
-    private final String TOPIC = "news-topic";
+    private String BOOTSTRAP_SERVERS;
+    private String TOPIC;
+
+    NewsApiProducer(String bootstrapServers, String topic) {
+        this.BOOTSTRAP_SERVERS = bootstrapServers;
+        this.TOPIC = topic;
+    }
 
     private Producer<String, String> createProducer() {
         Properties props = new Properties();
@@ -24,6 +32,10 @@ class NewsApiProducer {
         return new KafkaProducer<>(props);
     }
 
+    /**
+     * Compiles list of NewsApi endpoints, consumes them, and sends results to
+     * Kafka.
+     */
     void runProducer() {
         ArrayList<NewsApiEndpoint> newsApiEndpoints = new ArrayList<>();
         newsApiEndpoints.add(new NewsApiEndpoint("the-new-york-times", "top"));

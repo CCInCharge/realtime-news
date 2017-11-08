@@ -21,7 +21,7 @@ public class App {
         WebTarget target = client.target(targetURL + API_KEY);
         System.out.println(target.request(MediaType.APPLICATION_JSON).get(String.class));
         */
-        NewsApiProducer newsApiProducer = new NewsApiProducer();
+        NewsApiProducer newsApiProducer = new NewsApiProducer("localhost:9092", "news-topic");
         // Queue<NewsArticle> articles = newsApiProducer.runProducer();
         newsApiProducer.runProducer();
         /*
