@@ -82,8 +82,12 @@ class NewsApiEndpoint {
                 return null;
             }
             List<SimpleDateFormat> knownDateFormats = new ArrayList<>();
-            knownDateFormats.add(new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'"));
-            knownDateFormats.add(new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"));
+            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
+            format.setTimeZone(TimeZone.getTimeZone("UTC"));
+            knownDateFormats.add(format);
+            format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+            format.setTimeZone(TimeZone.getTimeZone("UTC"));
+            knownDateFormats.add(format);
             for (SimpleDateFormat df : knownDateFormats) {
                 try {
                     return df.parse(publishedAt);
