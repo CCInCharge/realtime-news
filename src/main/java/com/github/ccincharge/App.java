@@ -21,10 +21,14 @@ public class App {
         WebTarget target = client.target(targetURL + API_KEY);
         System.out.println(target.request(MediaType.APPLICATION_JSON).get(String.class));
         */
-        NewsApiEndpoint news = new NewsApiEndpoint("the-new-york-times", "top");
-        Queue<NewsArticle> articles = news.getResponse();
+        NewsApiProducer newsApiProducer = new NewsApiProducer();
+        // Queue<NewsArticle> articles = newsApiProducer.runProducer();
+        newsApiProducer.runProducer();
+        /*
         for (NewsArticle article : articles) {
-            System.out.println(article);
+            System.out.println(article.dataSource);
+            System.out.println(article.URL);
         }
+        */
     }
 }

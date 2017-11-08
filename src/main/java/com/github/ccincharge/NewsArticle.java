@@ -23,9 +23,16 @@ class NewsArticle {
     }
 
     public String toString() {
+        String publicationTimeFormat;
         // Need to convert data attribute to string
-        DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ");
-        String publicationTimeFormat = df.format(this.publicationTime);
+        if (publicationTime == null) {
+            publicationTimeFormat = "";
+        }
+        else {
+            DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+            publicationTimeFormat = df.format(this.publicationTime);
+        }
+
 
         // Maintains keys in order
         LinkedHashMap<String, String> output = new LinkedHashMap<>();

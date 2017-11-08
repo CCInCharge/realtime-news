@@ -8,7 +8,6 @@ import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.text.ParseException;
 import java.util.*;
@@ -29,6 +28,71 @@ class NewsApiEndpoint {
         private String url;
         private String urlToImage;
         private String publishedAt;
+
+        String getAuthor() {
+            if (Objects.equals(author, null)) {
+                return "";
+            }
+            else {
+                return author;
+            }
+        }
+
+        String getTitle() {
+            if (Objects.equals(title, null)) {
+                return "";
+            }
+            else {
+                return title;
+            }
+        }
+
+        String getDescription() {
+            if (Objects.equals(description, null)) {
+                return "";
+            }
+            else {
+                return description;
+            }
+        }
+
+        String getUrl() {
+            if (Objects.equals(url, null)) {
+                return "";
+            }
+            else {
+                return url;
+            }
+        }
+
+        String getUrlToImage() {
+            if (Objects.equals(urlToImage, null)) {
+                return "";
+            }
+            else {
+                return urlToImage;
+            }
+        }
+
+        Date getPublishedAt() {
+            if (Objects.equals(publishedAt, "")) {
+                return null;
+            }
+            if (publishedAt == null) {
+                return null;
+            }
+            List<SimpleDateFormat> knownDateFormats = new ArrayList<>();
+            knownDateFormats.add(new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'"));
+            knownDateFormats.add(new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"));
+            for (SimpleDateFormat df : knownDateFormats) {
+                try {
+                    return df.parse(publishedAt);
+                }
+                catch (ParseException p) {
+                }
+            }
+            return null;
+        }
     }
 
     private class NewsApiResponse {
@@ -36,6 +100,33 @@ class NewsApiEndpoint {
         private String source;
         private String sortBy;
         private List<NewsApiArticlesResponse> articles;
+
+        String getStatus() {
+            if (Objects.equals(status, null)) {
+                return "";
+            }
+            else {
+                return status;
+            }
+        }
+
+        String getSource() {
+            if (Objects.equals(source, null)) {
+                return "";
+            }
+            else {
+                return source;
+            }
+        }
+
+        String getSortBy() {
+            if (Objects.equals(sortBy, null)) {
+                return "";
+            }
+            else {
+                return sortBy;
+            }
+        }
     }
 
     private String longName() {
@@ -124,26 +215,18 @@ class NewsApiEndpoint {
         String response = target.request(MediaType.APPLICATION_JSON).get(String.class);
 
         NewsApiResponse responseObj = (new Gson()).fromJson(response, NewsApiResponse.class);
-        Queue<NewsArticle> output = new LinkedList<>();
 
+        Queue<NewsArticle> output = new LinkedList<>();
         if (Objects.equals(responseObj.status, "error")) {
             return output;
         }
 
-        DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
         for (NewsApiArticlesResponse article : responseObj.articles) {
             String dataSource = longName();
-            String title = article.title;
-            String URL = article.url;
-            String description = article.description;
-            Date publicationTime;
-            try {
-                publicationTime = df.parse(article.publishedAt);
-            }
-            catch (ParseException e) {
-                e.printStackTrace();
-                continue;
-            }
+            String title = article.getTitle();
+            String URL = article.getUrl();
+            String description = article.getDescription();
+            Date publicationTime = article.getPublishedAt();
             NewsArticle curArticle = new NewsArticle(URL, dataSource, title, description, publicationTime);
             output.add(curArticle);
         }
