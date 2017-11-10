@@ -1,4 +1,4 @@
-package com.github.ccincharge;
+package com.github.ccincharge.realtime_news_producers;
 
 import org.junit.Test;
 import static org.junit.Assert.assertEquals;

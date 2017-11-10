@@ -1,4 +1,4 @@
-package com.github.ccincharge;
+package com.github.ccincharge.realtime_news_producers;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;

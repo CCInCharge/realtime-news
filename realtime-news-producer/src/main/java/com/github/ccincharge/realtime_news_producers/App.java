@@ -1,4 +1,4 @@
-package com.github.ccincharge;
+package com.github.ccincharge.realtime_news_producers;
 
 public class App {
     public static void main( String[] args ) {
@@ -7,7 +7,7 @@ public class App {
         newsApiProducer.runProducer();
         */
 
-        TwitterStreamClass stream = new TwitterStreamClass();
+        TwitterStreamProducer stream = new TwitterStreamProducer("localhost:9092", "twitter-topic");
         stream.run();
     }
 }

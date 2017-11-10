@@ -1,4 +1,4 @@
-package com.github.ccincharge;
+package com.github.ccincharge.realtime_news_producers;
 
 import com.github.shyiko.dotenv.DotEnv;
 import com.google.gson.Gson;
