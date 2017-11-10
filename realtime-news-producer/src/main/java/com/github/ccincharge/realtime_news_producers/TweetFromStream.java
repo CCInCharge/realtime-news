@@ -1,5 +1,7 @@
 package com.github.ccincharge.realtime_news_producers;
 
+import com.google.gson.Gson;
+
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -36,6 +38,8 @@ class TweetFromStream {
         output.put("tweetText", tweetText);
         output.put("tweetedAt", timeFormat);
         output.put("isRetweet", isRetweet.toString());
-        return output.toString();
+
+        Gson gson = new Gson();
+        return gson.toJson(output);
     }
 }

@@ -1,0 +1,2 @@
+kafka-python==1.3.5
+newspaper3k==0.2.5
